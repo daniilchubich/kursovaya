@@ -1,12 +1,8 @@
-<link rel="stylesheet" type="text/css" href="style.css"></link>
  <?
-//require_once 'form.php';
-// получаем код семинара
 if (isset($_REQUEST["course_name"])): 
-$course_name=htmlspecialchars($_REQUEST["course_name"]);
-echo $course_name;
+    $course_name=htmlspecialchars($_REQUEST["course_name"]);
 else:
-$course_name=$_REQUEST["ELEMENT_ID"];
+    $course_name = null;
 endif;
 
 $ch = curl_init();
@@ -16,13 +12,15 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 $output = curl_exec($ch);
 $output = substr($output, strpos($output, "{"));
 curl_close($ch);
-//echo $output;
-
 $data = json_decode($output);
-
-
-?><form action="form.php" method="POST" >
-    <div class="b24-form" >   
+?>
+<link rel="stylesheet" type="text/css" href="style.css"></link>
+<form action="form.php" method="POST" >
+    <div style="display: none">
+         <input type="hidden" name="FORM_ID" value="5"> 
+         <?php  echo '<input type="hidden" name="SeminarId" value="' . $course_name . '">  '; ?>        
+     </div>
+     <div class="b24-form" >   
       <div id="b24-995035733017943230523586995011" data-styles-apllied="true" class="">      
         <div class="b24-form-wrapper b24-form-shadow b24-form-border-bottom"> 
           <div class="b24-form-content b24-form-padding-side">                 
@@ -77,7 +75,6 @@ $data = json_decode($output);
                                 </div>
                           </div>
                       </div>
-                       
               <div class="b24-form-field b24-form-field-name b24-form-control-string">             
                 <div>                
                   <div>                  
